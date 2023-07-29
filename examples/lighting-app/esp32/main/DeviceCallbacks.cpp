@@ -54,11 +54,9 @@ void AppDeviceCallbacks::PostAttributeChangeCallback(EndpointId endpointId, Clus
         OnLevelControlAttributeChangeCallback(endpointId, attributeId, value);
         break;
 
-#if CONFIG_LED_TYPE_RMT
     case ColorControl::Id:
         OnColorControlAttributeChangeCallback(endpointId, attributeId, value);
         break;
-#endif
 
     default:
         ESP_LOGI(TAG, "Unhandled cluster ID: %" PRIu32, clusterId);
@@ -93,7 +91,6 @@ exit:
 }
 
 // Currently ColorControl cluster is supported for ESP32C3_DEVKITM and ESP32S3_DEVKITM which have an on-board RGB-LED
-#if CONFIG_LED_TYPE_RMT
 void AppDeviceCallbacks::OnColorControlAttributeChangeCallback(EndpointId endpointId, AttributeId attributeId, uint8_t * value)
 {
     using namespace ColorControl::Attributes;
@@ -119,7 +116,6 @@ void AppDeviceCallbacks::OnColorControlAttributeChangeCallback(EndpointId endpoi
 exit:
     return;
 }
-#endif // CONFIG_LED_TYPE_RMT
 
 /** @brief OnOff Cluster Init
  *
